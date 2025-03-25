@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Poetry | Poetry Haven</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #6d597a;
+            --secondary: #b56576;
+            --light: #eae7dc;
+            --dark: #1a1a2e;
+            --accent: #e56b6f;
+            --gold: #d4a017;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        
+        .nav-links a.active {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 4rem 0;
+            background: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            position: relative;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--gold);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .era {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin: 30px 0;
+        }
+        
+        .era::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .left::after {
+            right: -12px;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        .era-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .era-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .era-period {
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .era-poets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .poet-tag {
+            background-color: var(--light);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .poet-tag:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Featured Poets */
+        .featured-poets {
+            background-color: white;
+            padding: 4rem 0;
+        }
+        
+        .poets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .poet-card {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .poet-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .poet-img {
+            height: 300px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .poet-content {
+            padding: 1.5rem;
+        }
+        
+        .poet-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .poet-dates {
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .poet-bio {
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #d45a5e;
+            transform: translateY(-3px);
+        }
+        
+        /* Poem Spotlight */
+        .poem-spotlight {
+            padding: 4rem 0;
+            background-color: var(--light);
+        }
+        
+        .spotlight-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .spotlight-poem {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .spotlight-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .spotlight-author {
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .spotlight-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            white-space: pre-line;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-icons {
+            margin-bottom: 2rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .era {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                text-align: left;
+            }
+            
+            .era::after {
+                left: 21px;
+            }
+            
+            .left::after, .right::after {
+                left: 21px;
+            }
+            
+            .right {
+                left: 0%;
+            }
+            
+            .poets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Poetry Haven</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="featured.html">Featured</a></li>
+                    <li><a href="classics.html" class="active">Classics</a></li>
+                    <li><a href="contemporary.html">Contemporary</a></li>
+                    <li><a href="learn.html">Learn</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title">Classic Poetry</h1>
+                <p class="page-subtitle">Journey through centuries of poetic mastery, from ancient epics to the Romantic revolution and beyond.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">Poetry Through the Ages</h2>
+            <p>Explore the evolution of poetic expression across different historical periods.</p>
+            
+            <div class="timeline-container">
+                <div class="timeline">
+                    <!-- Ancient Era -->
+                    <div class="era left">
+                        <div class="era-content">
+                            <h3 class="era-title">Ancient Poetry</h3>
+                            <p class="era-period">Before 5th Century</p>
+                            <p>The roots of poetic tradition, from epic narratives to lyrical expressions of early civilizations.</p>
+                            <div class="era-poets">
+                                <span class="poet-tag">Homer</span>
+                                <span class="poet-tag">Sappho</span>
+                                <span class="poet-tag">Virgil</span>
+                                <span class="poet-tag">Ovid</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Medieval Era -->
+                    <div class="era right">
+                        <div class="era-content">
+                            <h3 class="era-title">Medieval Poetry</h3>
+                            <p class="era-period">5th - 15th Century</p>
+                            <p>Religious devotion, courtly love, and allegorical narratives characterize this period.</p>
+                            <div class="era-poets">
+                                <span class="poet-tag">Dante</span>
+                                <span class="poet-tag">Chaucer</span>
+                                <span class="poet-tag">Rumi</span>
+                                <span class="poet-tag">Hafez</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Renaissance -->
+                    <div class="era left">
+                        <div class="era-content">
+                            <h3 class="era-title">Renaissance</h3>
+                            <p class="era-period">15th - 17th Century</p>
+                            <p>Rebirth of classical ideals combined with new poetic forms and humanist themes.</p>
+                            <div class="era-poets">
+                                <span class="poet-tag">Shakespeare</span>
+                                <span class="poet-tag">Milton</span>
+                                <span class="poet-tag">Donne</span>
+                                <span class="poet-tag">Spenser</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enlightenment -->
+                    <div class="era right">
+                        <div class="era-content">
+                            <h3 class="era-title">Enlightenment</h3>
+                            <p class="era-period">18th Century</p>
+                            <p>Reason and order dominate, with neoclassical forms and satirical verse.</p>
+                            <div class="era-poets">
+                                <span class="poet-tag">Pope</span>
+                                <span class="poet-tag">Swift</span>
+                                <span class="poet-tag">Dryden</span>
+                                <span class="poet-tag">Johnson</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Romantic -->
+                    <div class="era left">
+                        <div class="era-content">
+                            <h3 class="era-title">Romantic</h3>
+                            <p class="era-period">Late 18th - Early 19th Century</p>
+                            <p>Emotion, nature, and individualism take center stage in this revolutionary period.</p>
+                            <div class="era-poets">
+                                <span class="poet-tag">Wordsworth</span>
+                                <span class="poet-tag">Keats</span>
+                                <span class="poet-tag">Byron</span>
+                                <span class="poet-tag">Shelley</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Victorian -->
+                    <div class="era right">
+                        <div class="era-content">
+                            <h3 class="era-title">Victorian</h3>
+                            <p class="era-period">19th Century</p>
+                            <p>Poetry responds to industrialization, social change, and scientific discovery.</p>
+                            <div class="era-poets">
+                                <span class="poet-tag">Tennyson</span>
+                                <span class="poet-tag">Browning</span>
+                                <span class="poet-tag">Dickinson</span>
+                                <span class="poet-tag">Whitman</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Poets -->
+    <section class="featured-poets">
+        <div class="container">
+            <h2 class="section-title">Featured Classic Poets</h2>
+            <p>Discover the masters whose works have stood the test of time.</p>
+            
+            <div class="poets-grid">
+                <!-- Poet 1 -->
+                <div class="poet-card">
+                    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="William Shakespeare" class="poet-img">
+                    <div class="poet-content">
+                        <h3 class="poet-name">William Shakespeare</h3>
+                        <p class="poet-dates">1564 - 1616</p>
+                        <p class="poet-bio">The Bard of Avon, whose sonnets and plays transformed English literature with their depth and beauty.</p>
+                        <a href="shakespeare.html" class="btn">View Poems</a>
+                    </div>
+                </div>
+                
+                <!-- Poet 2 -->
+                <div class="poet-card">
+                    <img src="https://images.unsplash.com/photo-1584824486539-53bb4646bdbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Emily Dickinson" class="poet-img">
+                    <div class="poet-content">
+                        <h3 class="poet-name">Emily Dickinson</h3>
+                        <p class="poet-dates">1830 - 1886</p>
+                        <p class="poet-bio">The Belle of Amherst, known for her unconventional punctuation and profound meditations on nature and mortality.</p>
+                        <a href="dickinson.html" class="btn">View Poems</a>
+                    </div>
+                </div>
+                
+                <!-- Poet 3 -->
+                <div class="poet-card">
+                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="John Keats" class="poet-img">
+                    <div class="poet-content">
+                        <h3 class="poet-name">John Keats</h3>
+                        <p class="poet-dates">1795 - 1821</p>
+                        <p class="poet-bio">A principal figure of the Romantic movement, celebrated for his odes and sensuous imagery.</p>
+                        <a href="keats.html" class="btn">View Poems</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="poets.html" class="btn">Browse All Classic Poets</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poem Spotlight -->
+    <section class="poem-spotlight">
+        <div class="container">
+            <h2 class="section-title">Classic Poem Spotlight</h2>
+            <p>Each week we feature a different masterpiece from the classical canon.</p>
+            
+            <div class="spotlight-container">
+                <div class="spotlight-poem">
+                    <h3 class="spotlight-title">Sonnet 18</h3>
+                    <p class="spotlight-author">by William Shakespeare</p>
+                    <div class="spotlight-text">
+                        Shall I compare thee to a summer's day?
+                        Thou art more lovely and more temperate:
+                        Rough winds do shake the darling buds of May,
+                        And summer's lease hath all too short a date:
+                        
+                        Sometime too hot the eye of heaven shines,
+                        And often is his gold complexion dimm'd;
+                        And every fair from fair sometime declines,
+                        By chance or nature's changing course untrimm'd;
+                        
+                        But thy eternal summer shall not fade
+                        Nor lose possession of that fair thou owest;
+                        Nor shall Death brag thou wander'st in his shade,
+                        When in eternal lines to time thou growest:
+                        
+                        So long as men can breathe or eyes can see,
+                        So long lives this, and this gives life to thee.
+                    </div>
+                </div>
+                <button class="btn">View Analysis</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">Poetry Haven</div>
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Submit</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2023 Poetry Haven. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <!-- JavaScript for interactive elements -->
+    <script>
+        // Poet tag click handler
+        const poetTags = document.querySelectorAll('.poet-tag');
+        poetTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const poetName = tag.textContent;
+                alert(`Loading poems by ${poetName}...`);
+                // In a real implementation, this would filter or navigate to the poet's page
+            });
+        });
+        
+        // Poem spotlight rotation
+        const classicPoems = [
+            {
+                title: "Sonnet 18",
+                author: "by William Shakespeare",
+                text: `Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date:\n\nSometime too hot the eye of heaven shines,\nAnd often is his gold complexion dimm'd;\nAnd every fair from fair sometime declines,\nBy chance or nature's changing course untrimm'd;\n\nBut thy eternal summer shall not fade\nNor lose possession of that fair thou owest;\nNor shall Death brag thou wander'st in his shade,\nWhen in eternal lines to time thou growest:\n\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee.`
+            },
+            {
+                title: "Ode to a Nightingale",
+                author: "by John Keats",
+                text: `My heart aches, and a drowsy numbness pains\nMy sense, as though of hemlock I had drunk,\nOr emptied some dull opiate to the drains\nOne minute past, and Lethe-wards had sunk...`
+            },
+            {
+                title: "Because I could not stop for Death",
+                author: "by Emily Dickinson",
+                text: `Because I could not stop for Death –\nHe kindly stopped for me –\nThe Carriage held but just Ourselves –\nAnd Immortality.\n\nWe slowly drove – He knew no haste\nAnd I had put away\nMy labor and my leisure too,\nFor His Civility –`
+            }
+        ];
+        
+        function rotateClassicPoem() {
+            const randomIndex = Math.floor(Math.random() * classicPoems.length);
+            const poem = classicPoems[randomIndex];
+            
+            document.querySelector('.spotlight-title').textContent = poem.title;
+            document.querySelector('.spotlight-author').textContent = poem.author;
+            document.querySelector('.spotlight-text').textContent = poem.text;
+        }
+        
+        // Rotate poem every 10 seconds (for demo purposes)
+        setInterval(rotateClassicPoem, 10000);
+    </script>
+</body>
+</html>
