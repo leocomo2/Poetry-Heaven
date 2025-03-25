@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Poems | Poetry Haven</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #6d597a;
+            --secondary: #b56576;
+            --light: #eae7dc;
+            --dark: #1a1a2e;
+            --accent: #e56b6f;
+            --gold: #d4a017;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        
+        .nav-links a.active {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 4rem 0;
+            background: url('https://images.unsplash.com/photo-1535905557558-afc4877a26fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            position: relative;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Featured Section */
+        .featured-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        /* Poem Cards */
+        .poem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .poem-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .poem-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .poem-card-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .poem-card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .poem-card-author {
+            font-style: italic;
+        }
+        
+        .poem-card-body {
+            padding: 1.5rem;
+        }
+        
+        .poem-excerpt {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .poem-card-footer {
+            padding: 0 1.5rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #d45a5e;
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Categories */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-btn {
+            padding: 0.5rem 1.2rem;
+            background: white;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Poem of the Month */
+        .poem-month {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .poem-month::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            opacity: 0.2;
+        }
+        
+        .poem-month-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .poem-month-badge {
+            background: white;
+            color: var(--secondary);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .poem-month-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .poem-month-author {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        .poem-month-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 2rem;
+            white-space: pre-line;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-icons {
+            margin-bottom: 2rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .poem-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .poem-month {
+                padding: 2rem;
+            }
+            
+            .poem-month-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Poetry Haven</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="featured.html" class="active">Featured</a></li>
+                    <li><a href="classics.html">Classics</a></li>
+                    <li><a href="contemporary.html">Contemporary</a></li>
+                    <li><a href="learn.html">Learn</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title">Featured Poems</h1>
+                <p class="page-subtitle">Discover curated selections of exceptional poetry, from contemporary gems to timeless classics that continue to inspire.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title">Editor's Picks</h2>
+            <p>Our poetry editors select these exceptional works for their emotional depth, linguistic beauty, and universal appeal.</p>
+            
+            <div class="categories">
+                <button class="category-btn active">All</button>
+                <button class="category-btn">Love</button>
+                <button class="category-btn">Nature</button>
+                <button class="category-btn">Life</button>
+                <button class="category-btn">Contemporary</button>
+                <button class="category-btn">Classic</button>
+                <button class="category-btn">Short Form</button>
+            </div>
+            
+            <div class="poem-cards">
+                <!-- Poem Card 1 -->
+                <div class="poem-card">
+                    <div class="poem-card-header">
+                        <h3 class="poem-card-title">Wild Geese</h3>
+                        <p class="poem-card-author">by Mary Oliver</p>
+                    </div>
+                    <div class="poem-card-body">
+                        <p class="poem-excerpt">
+                            You do not have to be good.<br>
+                            You do not have to walk on your knees<br>
+                            for a hundred miles through the desert, repenting.<br>
+                            You only have to let the soft animal of your body<br>
+                            love what it loves...
+                        </p>
+                    </div>
+                    <div class="poem-card-footer">
+                        <span>3 min read</span>
+                        <a href="poem-wild-geese.html" class="btn">Read Full Poem</a>
+                    </div>
+                </div>
+                
+                <!-- Poem Card 2 -->
+                <div class="poem-card">
+                    <div class="poem-card-header">
+                        <h3 class="poem-card-title">The Sun and Her Flowers</h3>
+                        <p class="poem-card-author">by Rupi Kaur</p>
+                    </div>
+                    <div class="poem-card-body">
+                        <p class="poem-excerpt">
+                            what is stronger<br>
+                            than the human heart<br>
+                            which shatters over and over<br>
+                            and still lives<br>
+                            you pretend<br>
+                            not to see the blood<br>
+                            and pretend<br>
+                            there isn't a wound...
+                        </p>
+                    </div>
+                    <div class="poem-card-footer">
+                        <span>2 min read</span>
+                        <a href="poem-sun-flowers.html" class="btn">Read Full Poem</a>
+                    </div>
+                </div>
+                
+                <!-- Poem Card 3 -->
+                <div class="poem-card">
+                    <div class="poem-card-header">
+                        <h3 class="poem-card-title">Ode to a Nightingale</h3>
+                        <p class="poem-card-author">by John Keats</p>
+                    </div>
+                    <div class="poem-card-body">
+                        <p class="poem-excerpt">
+                            My heart aches, and a drowsy numbness pains<br>
+                            My sense, as though of hemlock I had drunk,<br>
+                            Or emptied some dull opiate to the drains<br>
+                            One minute past, and Lethe-wards had sunk...
+                        </p>
+                    </div>
+                    <div class="poem-card-footer">
+                        <span>5 min read</span>
+                        <a href="poem-nightingale.html" class="btn">Read Full Poem</a>
+                    </div>
+                </div>
+                
+                <!-- Poem Card 4 -->
+                <div class="poem-card">
+                    <div class="poem-card-header">
+                        <h3 class="poem-card-title">Still I Rise</h3>
+                        <p class="poem-card-author">by Maya Angelou</p>
+                    </div>
+                    <div class="poem-card-body">
+                        <p class="poem-excerpt">
+                            You may write me down in history<br>
+                            With your bitter, twisted lies,<br>
+                            You may trod me in the very dirt<br>
+                            But still, like dust, I'll rise...
+                        </p>
+                    </div>
+                    <div class="poem-card-footer">
+                        <span>3 min read</span>
+                        <a href="poem-still-rise.html" class="btn">Read Full Poem</a>
+                    </div>
+                </div>
+                
+                <!-- Poem Card 5 -->
+                <div class="poem-card">
+                    <div class="poem-card-header">
+                        <h3 class="poem-card-title">The Love Song of J. Alfred Prufrock</h3>
+                        <p class="poem-card-author">by T.S. Eliot</p>
+                    </div>
+                    <div class="poem-card-body">
+                        <p class="poem-excerpt">
+                            Let us go then, you and I,<br>
+                            When the evening is spread out against the sky<br>
+                            Like a patient etherized upon a table;<br>
+                            Let us go, through certain half-deserted streets...
+                        </p>
+                    </div>
+                    <div class="poem-card-footer">
+                        <span>6 min read</span>
+                        <a href="poem-prufrock.html" class="btn">Read Full Poem</a>
+                    </div>
+                </div>
+                
+                <!-- Poem Card 6 -->
+                <div class="poem-card">
+                    <div class="poem-card-header">
+                        <h3 class="poem-card-title">The Hill We Climb</h3>
+                        <p class="poem-card-author">by Amanda Gorman</p>
+                    </div>
+                    <div class="poem-card-body">
+                        <p class="poem-excerpt">
+                            When day comes we ask ourselves,<br>
+                            where can we find light in this never-ending shade?<br>
+                            The loss we carry,<br>
+                            a sea we must wade...
+                        </p>
+                    </div>
+                    <div class="poem-card-footer">
+                        <span>4 min read</span>
+                        <a href="poem-hill-climb.html" class="btn">Read Full Poem</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="load-more" style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-outline">Load More Poems</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poem of the Month -->
+    <section class="poem-month">
+        <div class="container">
+            <div class="poem-month-content">
+                <div class="poem-month-badge">Poem of the Month</div>
+                <h2 class="poem-month-title">The Guest House</h2>
+                <p class="poem-month-author">by Rumi</p>
+                <div class="poem-month-text">
+                    This being human is a guest house.
+                    Every morning a new arrival.
+                    
+                    A joy, a depression, a meanness,
+                    some momentary awareness comes
+                    as an unexpected visitor.
+                    
+                    Welcome and entertain them all!
+                    Even if they're a crowd of sorrows,
+                    who violently sweep your house
+                    empty of its furniture,
+                    still, treat each guest honorably.
+                    He may be clearing you out
+                    for some new delight.
+                    
+                    The dark thought, the shame, the malice,
+                    meet them at the door laughing,
+                    and invite them in.
+                    
+                    Be grateful for whoever comes,
+                    because each has been sent
+                    as a guide from beyond.
+                </div>
+                <button class="btn">Read Analysis</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">Poetry Haven</div>
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Submit</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2023 Poetry Haven. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <!-- JavaScript for interactive elements -->
+    <script>
+        // Category filtering
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // In a real implementation, you would filter poems here
+                // This is just for demonstration
+                console.log(`Filtering by: ${btn.textContent}`);
+            });
+        });
+        
+        // Load more poems
+        const loadMoreBtn = document.querySelector('.load-more .btn');
+        loadMoreBtn.addEventListener('click', () => {
+            // In a real implementation, you would fetch more poems here
+            alert('Loading more poems...');
+        });
+        
+        // Poem of the month - could be fetched from an API
+        const monthlyPoem = {
+            title: "The Guest House",
+            author: "by Rumi",
+            text: `This being human is a guest house.\nEvery morning a new arrival.\n\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.\n\nWelcome and entertain them all!\nEven if they're a crowd of sorrows,\nwho violently sweep your house\nempty of its furniture,\nstill, treat each guest honorably.\nHe may be clearing you out\nfor some new delight.\n\nThe dark thought, the shame, the malice,\nmeet them at the door laughing,\nand invite them in.\n\nBe grateful for whoever comes,\nbecause each has been sent\nas a guide from beyond.`
+        };
+        
+        // Set the poem of the month
+        document.querySelector('.poem-month-title').textContent = monthlyPoem.title;
+        document.querySelector('.poem-month-author').textContent = monthlyPoem.author;
+        document.querySelector('.poem-month-text').textContent = monthlyPoem.text;
+    </script>
+</body>
+</html>
