@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Poetry | Poetry Haven</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #6d597a;
+            --secondary: #b56576;
+            --light: #eae7dc;
+            --dark: #1a1a2e;
+            --accent: #e56b6f;
+            --educational: #4a8b8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        
+        .nav-links a.active {
+            color: var(--educational);
+            font-weight: bold;
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 4rem 0;
+            background: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            position: relative;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Learning Paths */
+        .learning-paths {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        .paths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .path-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .path-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .path-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .path-content {
+            padding: 1.5rem;
+        }
+        
+        .path-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .path-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        .path-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #d45a5e;
+            transform: translateY(-3px);
+        }
+        
+        .btn-educational {
+            background: var(--educational);
+        }
+        
+        .btn-educational:hover {
+            background: #3a7779;
+        }
+        
+        /* Poetry Forms */
+        .poetry-forms {
+            background-color: white;
+            padding: 4rem 0;
+        }
+        
+        .forms-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .form-accordion {
+            margin-top: 2rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            background-color: var(--light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background-color: #e0dbcd;
+        }
+        
+        .accordion-header h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+        
+        .accordion-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+        
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+            padding: 1.5rem;
+            max-height: 1000px;
+        }
+        
+        .form-example {
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .form-example-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        /* Writing Prompts */
+        .writing-prompts {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(74,139,141,0.1), rgba(109,89,122,0.1));
+        }
+        
+        .prompts-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .prompt-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .prompt-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .prompt-text {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .prompt-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .prompt-tag {
+            background-color: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        /* Glossary */
+        .glossary {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .glossary-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .glossary-search {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light);
+            border-radius: 5px;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .glossary-term {
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .term-name {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .term-definition {
+            margin-bottom: 0.5rem;
+        }
+        
+        .term-example {
+            font-style: italic;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-icons {
+            margin-bottom: 2rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .paths-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .glossary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Poetry Haven</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="featured.html">Featured</a></li>
+                    <li><a href="classics.html">Classics</a></li>
+                    <li><a href="contemporary.html">Contemporary</a></li>
+                    <li><a href="learn.html" class="active">Learn</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title">Learn Poetry</h1>
+                <p class="page-subtitle">Master the art of poetry through guided lessons, writing exercises, and poetic form explorations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Paths -->
+    <section class="learning-paths">
+        <div class="container">
+            <h2 class="section-title">Learning Paths</h2>
+            <p>Follow these structured paths to develop your poetic skills at your own pace.</p>
+            
+            <div class="paths-grid">
+                <!-- Path 1 -->
+                <div class="path-card">
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Beginner's Guide" class="path-img">
+                    <div class="path-content">
+                        <h3 class="path-title">Beginner's Guide to Poetry</h3>
+                        <p class="path-description">Start your poetic journey with the fundamentals of reading, understanding, and writing poetry.</p>
+                        <div class="path-meta">
+                            <span>8 Lessons</span>
+                            <span>Beginner</span>
+                        </div>
+                        <a href="beginner-path.html" class="btn btn-educational">Start Learning</a>
+                    </div>
+                </div>
+                
+                <!-- Path 2 -->
+                <div class="path-card">
+                    <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Poetic Forms" class="path-img">
+                    <div class="path-content">
+                        <h3 class="path-title">Mastering Poetic Forms</h3>
+                        <p class="path-description">Explore sonnets, haiku, villanelles, and more with in-depth lessons and writing exercises.</p>
+                        <div class="path-meta">
+                            <span>12 Lessons</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="forms-path.html" class="btn btn-educational">Start Learning</a>
+                    </div>
+                </div>
+                
+                <!-- Path 3 -->
+                <div class="path-card">
+                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Poetry Analysis" class="path-img">
+                    <div class="path-content">
+                        <h3 class="path-title">Poetry Analysis & Criticism</h3>
+                        <p class="path-description">Learn how to critically read and analyze poetry like a scholar.</p>
+                        <div class="path-meta">
+                            <span>6 Lessons</span>
+                            <span>Advanced</span>
+                        </div>
+                        <a href="analysis-path.html" class="btn btn-educational">Start Learning</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poetry Forms -->
+    <section class="poetry-forms">
+        <div class="container">
+            <div class="forms-container">
+                <h2 class="section-title">Poetic Forms Explained</h2>
+                <p>Explore different poetic structures and their unique characteristics.</p>
+                
+                <div class="form-accordion">
+                    <!-- Form 1 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Sonnet</h3>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>A 14-line poem with a specific rhyme scheme, traditionally exploring themes of love. The two most common forms are the Petrarchan (Italian) and Shakespearean (English).</p>
+                            <div class="form-example">
+                                <div class="form-example-title">Example: Shakespearean Sonnet</div>
+                                <p>14 lines, rhyme scheme: ABAB CDCD EFEF GG<br>
+                                Three quatrains and a final rhyming couplet<br>
+                                Typically written in iambic pentameter</p>
+                            </div>
+                            <a href="sonnet-lesson.html" class="btn btn-educational">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form 2 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Haiku</h3>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>A traditional Japanese form consisting of three lines with a 5-7-5 syllable structure, often capturing a moment in nature.</p>
+                            <div class="form-example">
+                                <div class="form-example-title">Example Structure</div>
+                                <p>First line: 5 syllables<br>
+                                Second line: 7 syllables<br>
+                                Third line: 5 syllables</p>
+                            </div>
+                            <a href="haiku-lesson.html" class="btn btn-educational">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form 3 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Villanelle</h3>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>A 19-line poem with five tercets followed by a quatrain, using a specific pattern of repetition.</p>
+                            <div class="form-example">
+                                <div class="form-example-title">Key Features</div>
+                                <p>Rhyme scheme: ABA ABA ABA ABA ABA ABAA<br>
+                                Lines 1 and 3 repeat alternately in subsequent stanzas<br>
+                                Both lines appear together in the final stanza</p>
+                            </div>
+                            <a href="villanelle-lesson.html" class="btn btn-educational">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form 4 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Free Verse</h3>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Poetry that doesn't follow regular meter or rhyme schemes, relying on other elements for rhythm and structure.</p>
+                            <div class="form-example">
+                                <div class="form-example-title">Characteristics</div>
+                                <p>No set rhyme scheme or meter<br>
+                                Relies on natural speech rhythms<br>
+                                May use other poetic devices like imagery and metaphor</p>
+                            </div>
+                            <a href="freeverse-lesson.html" class="btn btn-educational">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Writing Prompts -->
+    <section class="writing-prompts">
+        <div class="container">
+            <div class="prompts-container">
+                <h2 class="section-title">Daily Writing Prompts</h2>
+                <p>Spark your creativity with these poetry writing exercises.</p>
+                
+                <div class="prompt-card">
+                    <h3 class="prompt-title">Memory as a Landscape</h3>
+                    <p class="prompt-text">Choose a vivid childhood memory and describe it as if it were a physical landscape. What does it look like? What colors dominate? What's the weather like? Is there water, mountains, forests?</p>
+                    <div class="prompt-tags">
+                        <span class="prompt-tag">Memory</span>
+                        <span class="prompt-tag">Imagery</span>
+                        <span class="prompt-tag">Free Verse</span>
+                    </div>
+                    <button class="btn btn-educational">Try This Prompt</button>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <a href="prompts-archive.html" class="btn">Browse All Prompts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Glossary -->
+    <section class="glossary">
+        <div class="container">
+            <div class="glossary-container">
+                <h2 class="section-title">Poetry Glossary</h2>
+                <p>Look up poetic terms and devices to deepen your understanding.</p>
+                
+                <input type="text" class="glossary-search" placeholder="Search poetic terms...">
+                
+                <div class="glossary-grid">
+                    <!-- Term 1 -->
+                    <div class="glossary-term">
+                        <h3 class="term-name">Metaphor</h3>
+                        <p class="term-definition">A figure of speech that makes a comparison between two unlike things without using "like" or "as".</p>
+                        <p class="term-example">Example: "All the world's a stage" (Shakespeare)</p>
+                    </div>
+                    
+                    <!-- Term 2 -->
+                    <div class="glossary-term">
+                        <h3 class="term-name">Enjambment</h3>
+                        <p class="term-definition">The continuation of a sentence or clause across a line break without punctuation.</p>
+                        <p class="term-example">Example: "I think that I shall never see / A poem lovely as a tree"</p>
+                    </div>
+                    
+                    <!-- Term 3 -->
+                    <div class="glossary-term">
+                        <h3 class="term-name">Iambic Pentameter</h3>
+                        <p class="term-definition">A metrical pattern in poetry consisting of five iambs (unstressed syllable followed by a stressed syllable) per line.</p>
+                        <p class="term-example">Example: "Shall I compare thee to a summer's day?"</p>
+                    </div>
+                    
+                    <!-- Term 4 -->
+                    <div class="glossary-term">
+                        <h3 class="term-name">Alliteration</h3>
+                        <p class="term-definition">The repetition of consonant sounds at the beginning of words close to each other.</p>
+                        <p class="term-example">Example: "Peter Piper picked a peck of pickled peppers"</p>
+                    </div>
+                    
+                    <!-- Term 5 -->
+                    <div class="glossary-term">
+                        <h3 class="term-name">Volta</h3>
+                        <p class="term-definition">The turn in thought in a sonnet, often occurring between the octave and sestet in Petrarchan sonnets.</p>
+                        <p class="term-example">Example: The "But" in line 9 of many sonnets signals the volta.</p>
+                    </div>
+                    
+                    <!-- Term 6 -->
+                    <div class="glossary-term">
+                        <h3 class="term-name">Synecdoche</h3>
+                        <p class="term-definition">A figure of speech in which a part is made to represent the whole or vice versa.</p>
+                        <p class="term-example">Example: "All hands on deck" (hands represent sailors)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">Poetry Haven</div>
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Submit</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2023 Poetry Haven. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <!-- JavaScript for interactive elements -->
+    <script>
+        // Accordion functionality
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                item.classList.toggle('active');
+                
+                // Close other items when one is opened
+                if (item.classList.contains('active')) {
+                    accordionItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Glossary search functionality
+        const glossarySearch = document.querySelector('.glossary-search');
+        glossarySearch.addEventListener('input', () => {
+            const searchTerm = glossarySearch.value.toLowerCase();
+            const terms = document.querySelectorAll('.glossary-term');
+            
+            terms.forEach(term => {
+                const termName = term.querySelector('.term-name').textContent.toLowerCase();
+                const termDef = term.querySelector('.term-definition').textContent.toLowerCase();
+                
+                if (termName.includes(searchTerm) || termDef.includes(searchTerm)) {
+                    term.style.display = 'block';
+                } else {
+                    term.style.display = 'none';
+                }
+            });
+        });
+        
+        // Writing prompt button
+        const promptButton = document.querySelector('.prompt-card .btn');
+        promptButton.addEventListener('click', () => {
+            alert('Timer started! You have 15 minutes to write your poem based on this prompt.');
+        });
+    </script>
+</body>
+</html>
